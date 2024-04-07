@@ -1,6 +1,6 @@
 <template>
     <a-tabs v-model:activeKey="currentTab" centered>
-        <a-tab-pane key="1" tab="Step 1">
+        <a-tab-pane key="1" tab="Step 1" disabled>
             <a-typography-paragraph>Please select a meal</a-typography-paragraph>
             <a-select v-model:value="currentMeal.value" style="width: 100px;" @change="handleMealChange">
                 <a-select-option value="breakfast">Breakfast</a-select-option>
@@ -8,7 +8,7 @@
                 <a-select-option value="dinner">Dinner</a-select-option>
             </a-select>
             <a-typography-paragraph>Please enter number of people</a-typography-paragraph>
-            <a-input-number v-model:value="numberPeople" :min="1" :max="10" style="width: 65px;"></a-input-number>
+            <a-input-number v-model:value="numberPeople" :min="1" :max="10" style="width: 65px;" @change="handleNumberPeopleChange"></a-input-number>
         </a-tab-pane>
         <a-tab-pane key="2" tab="Step 2" disabled>
             <a-typography-paragraph>Please select a restaurant</a-typography-paragraph>
@@ -22,7 +22,7 @@
                 </a-flex>
                 <a-flex :justify="'space-between'" style="margin-bottom: 10px;" v-for="(block, index) in blockDishes" :key="index"> 
                     <a-select v-model:value="block.currentDish" :options="block.dishes" style="width: 180px;" @change="handleDishChange(block, index)"></a-select>
-                    <a-input-number v-model:value="block.numberServing" :min="1" :max="10" style="width: 65px"></a-input-number>
+                    <a-input-number v-model:value="block.numberServing" :min="1" :max="10" style="width: 65px" @change="handleNumberServingChange(block)"></a-input-number>
                 </a-flex>
             </div>
             <div style="margin-top: 10px;">
@@ -161,12 +161,9 @@
                 }
 
                 if (Number(this.currentTab) === 2) {
+                    this.isMealChanged = false;
                     this.isRestaurantChanged = false;
                 }
-            },
-
-            handleMealChange() {
-                this.isMealChanged = true;
             },
 
             addDish() {
@@ -208,10 +205,6 @@
                 });
             },
 
-            handleRestaurantChange() {
-                this.isRestaurantChanged = true;
-            },
-
             handleDishChange(block, index) {
                 let oldDish = this.arrCurrentDish[index];
                 this.arrCurrentDish[index] = block.currentDish;
@@ -243,6 +236,26 @@
                 }
 
                 console.log(previewOrder);
+            },
+
+            handleMealChange() {
+                this.isMealChanged = true;
+            },
+
+            handleRestaurantChange() {
+                this.isRestaurantChanged = true;
+            },
+
+            handleNumberPeopleChange(value) {
+                if (value === null || value === '') {
+                    this.numberPeople = 1;
+                }
+            },
+
+            handleNumberServingChange(block) {
+                if (block.numberServing === null || block.numberServing === '') {
+                    block.numberServing = 1;
+                }
             }
         }
     }
