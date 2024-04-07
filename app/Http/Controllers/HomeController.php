@@ -52,7 +52,7 @@ class HomeController extends Controller
             return in_array($meal, $dish['availableMeals']) && ($restaurant === $dish['restaurant']);
         });
 
-        $dishesName = array_column($dishesFilterByMealAndRestaurant, 'name');
+        $dishesName = array_unique(array_column($dishesFilterByMealAndRestaurant, 'name'));
 
         return response()->json([$dishesName]);
     }

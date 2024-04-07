@@ -116,8 +116,10 @@
                                 });
                             });
 
-                            this.restaurants = arrRestaurants;
-                            this.currentRestaurant = this.restaurants[0].value;
+                            if (arrRestaurants.length > 0) {
+                                this.restaurants = arrRestaurants;
+                                this.currentRestaurant = this.restaurants[0].value;
+                            }
                         })
                         .catch(error => {
                             console.log(error);
@@ -140,16 +142,18 @@
                                 });
                             });
 
-                            this.arrDish = arrDishes;
-                            this.arrCurrentDish = [];
-                            this.blockDishes = [];
-
-                            this.arrCurrentDish.push(arrDishes[0].value);
-                            this.blockDishes.push({
-                                currentDish: arrDishes[0].value,
-                                dishes: arrDishes,
-                                numberServing: 1,
-                            });
+                            if (arrDishes.length > 0) {
+                                this.arrDish = arrDishes;
+                                this.arrCurrentDish = [];
+                                this.blockDishes = [];
+    
+                                this.arrCurrentDish.push(arrDishes[0].value);
+                                this.blockDishes.push({
+                                    currentDish: arrDishes[0].value,
+                                    dishes: arrDishes,
+                                    numberServing: 1,
+                                });
+                            }
                         })
                         .catch(error => {
                             console.log(error);
@@ -221,7 +225,7 @@
                 });
 
                 let previewOrder = {
-                    meal: this.currentMeal,
+                    meal: this.labelMeal,
                     numberPeople: this.numberPeople,
                     restaurant: this.currentRestaurant,
                     dishes: previewDishes
@@ -257,9 +261,7 @@
                 this.arrDish.forEach(item => {
                     if (item.value === dish.currentDish) {
                         item.disabled = true;
-                    }
-
-                    if (item.value === oldDish) {
+                    } else if (item.value === oldDish) {
                         delete item.disabled;
                     }
                 });

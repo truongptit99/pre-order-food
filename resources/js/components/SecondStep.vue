@@ -4,6 +4,8 @@
 </template>
 <script>
     export default {
+        emits: ['handleRestaurant'],
+
         props: {
             currentRestaurant: String,
             restaurants: Array

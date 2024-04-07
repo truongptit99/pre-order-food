@@ -15,6 +15,8 @@
     import { PlusCircleOutlined } from '@ant-design/icons-vue';
 
     export default {
+        emits: ['handleDish', 'handleNumberServing', 'handleAddDish'],
+
         components: {
             PlusCircleOutlined
         },
